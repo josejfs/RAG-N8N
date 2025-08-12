@@ -1,0 +1,3 @@
+# Esta pasta contém os workflows em formato JSON
+# Todos os arquivos .json aqui são versionados no Git
+# Para criar workflows: interface n8n ou editar JSON diretamente

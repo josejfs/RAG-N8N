@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Chat IA inteligente com sistema RAG para conversas naturais e processamento de documentos">
+    <meta name="keywords" content="IA, chat, RAG, inteligência artificial, documentos">
+    <meta name="author" content="Mestre José">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Chat IA">
+    
+    <!-- Preload de recursos críticos -->
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="preload" href="script.js" as="script">
+    
+    <title>Chat IA + RAG - Mestre José</title>
+    
+    <!-- CSS externo -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+    
+</head>
+<body>
+    <div class="chat-container" role="main">
+        <header class="chat-header" role="banner">
+            <h1>🤖 Chat IA + RAG</h1>
+            <p>Converse com a IA e alimente a base de conhecimento</p>
+            <button 
+                class="upload-toggle" 
+                onclick="toggleUpload()" 
+                title="Enviar arquivos"
+                aria-label="Abrir área de upload de arquivos"
+                aria-expanded="false">
+                📁
+            </button>
+        </header>
+
+        <section class="upload-area" id="uploadArea" role="region" aria-label="Área de upload de arquivos">
+            <div class="file-upload" id="fileUpload" onclick="document.getElementById('fileInput').click()">
+                <input 
+                    type="file" 
+                    id="fileInput" 
+                    onchange="handleFileSelect(this)"
+                    accept=".pdf,.txt,.doc,.docx,.md,.json,.csv,.xlsx,.xls"
+                    aria-label="Selecionar arquivo para upload">
+                <div class="file-icon" id="fileIcon" aria-hidden="true">📄</div>
+                <div class="file-text">
+                    <h4 id="fileTitle">Selecionar arquivo para RAG</h4>
+                    <p id="fileDescription">Clique para escolher um arquivo (PDF, TXT, DOC, etc.)</p>
+                </div>
+                <button 
+                    type="button" 
+                    class="upload-button" 
+                    id="uploadButton" 
+                    onclick="uploadFile(event)" 
+                    disabled
+                    aria-label="Enviar arquivo selecionado">
+                    📤 Enviar
+                </button>
+            </div>
+        </section>
+
+        <main class="chat-messages" id="chatMessages" role="log" aria-label="Mensagens do chat">
+            <div class="welcome-message">
+                <h3>👋 Bem-vindo ao Chat IA!</h3>
+                <p>Faça perguntas, converse naturalmente ou envie arquivos para enriquecer o conhecimento da IA.</p>
+                
+                <div class="feature-list">
+                    <div class="feature">
+                        <div class="feature-icon" aria-hidden="true">💬</div>
+                        <h4>Chat Inteligente</h4>
+                        <p>Conversas naturais com IA</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon" aria-hidden="true">📚</div>
+                        <h4>RAG System</h4>
+                        <p>Envie documentos</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon" aria-hidden="true">🧠</div>
+                        <h4>Memória</h4>
+                        <p>Contexto persistente</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div class="typing-indicator" id="typingIndicator" role="status" aria-label="IA está digitando">
+            <div class="typing-dots">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            </div>
+        </div>
+
+        <footer class="chat-input-area" role="form">
+            <div class="input-container">
+                <textarea 
+                    id="messageInput" 
+                    class="message-input" 
+                    placeholder="Digite sua mensagem..." 
+                    rows="1"
+                    onkeydown="handleKeyPress(event)"
+                    oninput="autoResize(this)"
+                    aria-label="Campo de entrada de mensagem"
+                    maxlength="2000"></textarea>
+                <button 
+                    class="send-button" 
+                    id="sendButton" 
+                    onclick="sendMessage()"
+                    aria-label="Enviar mensagem">
+                    🚀
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript externo -->
+    <script src="script.js" defer></script>
+</body>
+</html>

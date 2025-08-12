@@ -1,0 +1,147 @@
+# Ambiente Virtual Python
+venv/
+env/
+.env
+.venv
+
+# Dados do n8n (contém banco de dados e configurações sensíveis)
+n8n_data/
+*.sqlite
+*.db
+
+# Workflows locais devem subir pro git - COMENTADO para permitir versionamento
+# workflows/ - MANTEMOS workflows/ no git para versionamento do código!
+
+# Workflows arquivados/deletados (opcional - pode escolher versionar ou não)
+workflows/_archived/
+
+# Logs
+*.log
+sync.log
+n8n.log
+
+# Arquivos temporários
+*.tmp
+*.temp
+*.bak
+*~
+.DS_Store
+Thumbs.db
+
+# Backups (podem conter dados sensíveis)
+backups/
+
+# Cache Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Sistema
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Docker
+.dockerignore
+
+# Arquivos de configuração local
+config.local.json
+.env.local
+.env.production.local
+.env.development.local
+
+# Exemplo de configuração deve ficar no git
+# .env.example - MANTEMOS no git como template
+
+# Certificados e chaves
+*.pem
+*.key
+*.crt
+*.csr
+*.p12
+*.pfx
+
+# Arquivos temporários do editor
+*.orig
+*.rej
+.#*
+\#*#
+
+# Arquivos de teste
+test_*.json
+*_test.json
+
+# Node.js (caso tenha extensões)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Jupyter Notebooks checkpoints
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# Arquivos específicos que podem conter dados sensíveis
+credentials.json
+secrets.json
+private_key.json
+
+# Arquivos de estado e cache da sincronização
+.sync_cache
+.file_hashes
+last_sync.json
+
+# PID files dos processos em execução
+*.pid
+
+# Arquivos de monitoramento
+monitoring/
+metrics/
+
+# Testes locais
+test_workflows/
+*_test_output.json
+
+#N8N-DevHub
+.env.example
+activate.sh
+db_access.py
+detect_n8n_version.sh
+docker-compose.yml
+LICENSE
+n8n-dev.sh
+n8n_sync.py
+README.md
+requirements.txt
+n8n_data/
