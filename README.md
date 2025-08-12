@@ -1,5 +1,3 @@
-Mestre José, segue o README focado **só** neste projeto RAG, já deixando claro que ele foi criado e deve rodar em modo desenvolvimento usando o **N8N-DevHub**. Copie e cole direto no seu `README.md`:
-
 ---
 
 # RAG – Upload & Q\&A com Base Vetorial (n8n) 📚⚙️
