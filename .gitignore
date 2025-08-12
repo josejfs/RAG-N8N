@@ -142,6 +142,6 @@ docker-compose.yml
 LICENSE
 n8n-dev.sh
 n8n_sync.py
-README.md
 requirements.txt
 n8n_data/
+scripts/

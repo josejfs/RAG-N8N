@@ -1,0 +1,291 @@
+{
+  "id": "QOkXdoUBNTREgVTh",
+  "name": "RAG",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Upload your data to test RAG",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Upload your file(s)",
+              "fieldType": "file",
+              "acceptFileTypes": ".pdf, .csv",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -400,
+        152
+      ],
+      "id": "96c5f126-62b0-4fcb-8c16-522aa2c29ab8",
+      "name": "Upload your file here",
+      "webhookId": "82848bc4-5ea2-4e5a-8bb6-3c09b94a8c5d"
+    },
+    {
+      "parameters": {
+        "dataType": "binary",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        176,
+        288
+      ],
+      "id": "0cd0b94c-8f5e-4575-823b-ad139bb0b592",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "memoryKey": {
+          "__rl": true,
+          "value": "vector_store_key",
+          "mode": "list",
+          "cachedResultName": "vector_store_key"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.2,
+      "position": [
+        -40,
+        48
+      ],
+      "id": "7a137ffa-b714-4700-ac01-4fddc5b062a8",
+      "name": "Insert Data to Store"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolName": "knowledge_base",
+        "toolDescription": "Use this knowledge base to answer questions from the user",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "list",
+          "value": "vector_store_key"
+        },
+        "topK": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.2,
+      "position": [
+        80,
+        776
+      ],
+      "id": "ca9b7dbe-3be6-43fb-a759-802fc2dbb2dd",
+      "name": "Query Data Tool"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Você é um assistente especializado em consultar a base de dados (knowledge_base) da empresa.\n\nINSTRUÇÕES CRÍTICAS:\n1. SEMPRE consulte knowledge_base PRIMEIRO\n2. LEIA com atenção EXATA o que o usuário está perguntando\n3. RESPONDA APENAS o que foi perguntado - NÃO adicione passos extras\n4. NUNCA invente informações\n\nCOMO RESPONDER:\n1. Identifique EXATAMENTE o que foi perguntado\n2. Procure no knowledge_base APENAS essa informação específica  \n3. Ignore informações relacionadas que NÃO foram perguntadas\n4. Responda de forma direta e concisa\n\nFORMATO DA RESPOSTA:\n## [Título específico da pergunta]\n- Resposta direta ao que foi perguntado\n\n*Fonte: [nome]*\n\nPrecisa de mais detalhes?\n\nEXEMPLOS:\n- Pergunta: \"como abrir câmera?\" → Responda APENAS como abrir\n- Pergunta: \"como tirar foto?\" → Responda APENAS como tirar foto\n- Pergunta: \"como gravar vídeo?\" → Responda APENAS como gravar vídeo\n\nPROIBIDO:\n❌ Adicionar passos não solicitados\n❌ Incluir informações extras \"relacionadas\"\n❌ Responder mais do que foi perguntado\n\nPERGUNTA DO USUÁRIO: {{ $json.body.message }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -120,
+        552
+      ],
+      "id": "b030592a-1aa9-4c71-ae2f-263279bf872a",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-20b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        776
+      ],
+      "id": "baa8911e-2a57-492b-8927-f988cea42e56",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "EuFSDMVoweyNAmRL",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "mxbai-embed-large:latest"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+      "typeVersion": 1,
+      "position": [
+        -144,
+        288
+      ],
+      "id": "11821f6a-cc0a-4c92-851b-e902de78a163",
+      "name": "Embeddings Ollama",
+      "credentials": {
+        "ollamaApi": {
+          "id": "20gRHFd1Qrq7jOVj",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "6dc67ac6-5287-451b-a0a9-a2a44b6368c4",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -400,
+        552
+      ],
+      "id": "4ba86ef7-4866-489a-8238-b17c7097af91",
+      "name": "Webhook",
+      "webhookId": "6dc67ac6-5287-451b-a0a9-a2a44b6368c4"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        448,
+        552
+      ],
+      "id": "ec3705ff-e604-4fbc-85e8-125e5e646afe",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.body.message }}",
+        "contextWindowLength": 4
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -48,
+        776
+      ],
+      "id": "f94704ab-6d8a-4af3-9a4e-73f45311bb0d",
+      "name": "Simple Memory"
+    }
+  ],
+  "connections": {
+    "Upload your file here": {
+      "main": [
+        [
+          {
+            "node": "Insert Data to Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Insert Data to Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query Data Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Ollama": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Insert Data to Store",
+            "type": "ai_embedding",
+            "index": 0
+          },
+          {
+            "node": "Query Data Tool",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {},
+  "tags": [],
+  "meta": {
+    "lastModified": "2025-08-12T15:45:59.373037",
+    "syncedFromDB": true
+  }
+}

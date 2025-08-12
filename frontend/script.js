@@ -4,8 +4,8 @@ const CONFIG = {
     //CHAT_WEBHOOK: 'https://n8n.srv539289.hstgr.cloud/webhook/6dc67ac6-5287-451b-a0a9-a2a44b6368c4',
     //RAG_WEBHOOK: 'https://n8n.srv539289.hstgr.cloud/form/82848bc4-5ea2-4e5a-8bb6-3c09b94a8c5d',
     //Produção
-    CHAT_WEBHOOK: 'https://n8n.srv539289.hstgr.cloud/webhook/6dc67ac6-5287-451b-a0a9-a2a44b6368c4',
-    RAG_WEBHOOK: 'https://n8n.srv539289.hstgr.cloud/form/82848bc4-5ea2-4e5a-8bb6-3c09b94a8c5d',
+    CHAT_WEBHOOK: 'http://localhost:5678/webhook/6dc67ac6-5287-451b-a0a9-a2a44b6368c4',
+    RAG_WEBHOOK: 'http://localhost:5678/form/82848bc4-5ea2-4e5a-8bb6-3c09b94a8c5d',
     MAX_MESSAGE_LENGTH: 2000,
     MAX_FILE_SIZE: 50 * 1024 * 1024, // 50MB
     TYPING_DELAY: 1000,
